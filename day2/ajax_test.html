@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p id="demo">Let AJAX change this text.</p>
+
+<button type="button" onclick="loadDoc()">Change Content</button>
+
+<script>
+function loadDoc() {
+  var xhttp;
+  xhttp=new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState === 4 && xhttp.status === 200) {
+      //document.getElementById("demo").innerHTML = xhttp.responseText;
+      // parse responseText
+      /*
+        <ul>
+            <li></li>
+            <li></li>
+        </ul>
+    
+
+      */
+	  var obj = JSON.parse(xhttp.responseText);
+	  var ul = document.createElement('ul');	
+	  
+	  for (var key in obj) {
+		  if (obj.hasOwnProperty(key)) {
+			//console.log(key + " -> " + obj[key]);
+			var li = document.createElement('li');
+			li.innerHTML = key + " -> " + obj[key]; 
+			ul.appendChild(li);
+		  }
+	 }
+	 
+	  //document.getElementById("demo").appendChild(ul);
+	  document.getElementById("demo").innerHTML = ul.innerHTML;
+	}
+
+  };
+  xhttp.open("GET", 'http://www.omdbapi.com/?t=batman&y=&plot=short&r=json', true);
+  xhttp.send();
+}
+
+</script>
+</body>
+</html>

@@ -5,17 +5,17 @@ while (true) {
 
 	var result = '';
 
-function isValid() {
-	
-	for (i=0; i<3; i++) {
-		if (user.toLowerCase() === shapes[i]) {
-			alert('Validation: Match ' + shapes[i]);
-			return true;
-		}
-	}	
-	
-	return false;
-}
+	function isValid() {
+		
+		for (i=0; i<3; i++) {
+			if (user.toLowerCase() === shapes[i]) {
+				alert('Validation: Match ' + shapes[i]);
+				return true;
+			}
+		}	
+		
+		return false;
+	}
 
 	// if valid, randomly get computer's selection
 	// Display winner or tie
