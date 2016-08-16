@@ -6,8 +6,7 @@
 
 <button type="button" onclick="loadDoc()">Change Content</button>
 
-<script>
-function loadDoc() {
+
   var xhttp;
   xhttp=new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -19,7 +18,8 @@ function loadDoc() {
             <li></li>
             <li></li>
         </ul>
-    
+    <script>
+function loadDoc() {
 
       */
 	  var obj = JSON.parse(xhttp.responseText);
@@ -34,7 +34,7 @@ function loadDoc() {
 		  }
 	 }
 	 
-	  //document.getElementById("demo").appendChild(ul);
+	  //document.body.appendChild(ul);
 	  document.getElementById("demo").innerHTML = ul.innerHTML;
 	}
 

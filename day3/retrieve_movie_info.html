@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p id="demo">Select a Movie </p>
+
+ <select id ="name">
+  <option value="Alice">Forrest Gump</option>
+  <option value="Bob">Crash</option>
+  <option value="Carol">When Harry Met Sally</option>
+  <option value="David">You've Got Mail</option>
+</select> 
+
+<button type="button" onclick="loadPic()">Get pictures</button>
+
+<div id="info"></div>
+
+<script>
+function loadPic() {
+  var xhttp = new XMLHttpRequest();
+  var picUrl;
+  //alert(document.getElementById('name').value);
+  if (document.getElementById('name').value==='Alice') {
+	picUrl ='http://www.omdbapi.com/?t=forrest+gump&y=&plot=short&r=json';
+	//picUrl = 'http://localhost:8080/Alice';
+  } else if (document.getElementById('name').value==='Bob') {
+	picUrl ='http://www.omdbapi.com/?t=crash&y=&plot=short&r=json';
+	//picUrl = 'http://localhost:8080/Bob';
+  } else if (document.getElementById('name').value==='Carol') {
+	picUrl = 'http://www.omdbapi.com/?t=when+harry+met+sally&y=&plot=short&r=json'; 
+	//picUrl = 'http://localhost:8080/Carol';
+  } else if (document.getElementById('name').value==='David') {
+	//picUrl = 'http://localhost:8080/David';
+	picUrl ='http://www.omdbapi.com/?t=you\'ve+got+mail&y=&plot=short&r=json';
+  }
+  //alert(picUrl);
+  
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState === 4 && xhttp.status === 200) {
+      //document.getElementById("demo").innerHTML = xhttp.responseText;
+      // parse responseText
+      /*
+        <ul>
+            <li></li>
+            <li></li>
+        </ul>
+    
+
+      */
+	  var obj = JSON.parse(xhttp.responseText);
+	  var ul = document.createElement('ul');	
+	  
+	  for (var key in obj) {
+		  if (obj.hasOwnProperty(key)) {
+			//console.log(key + " -> " + obj[key]);
+			var li = document.createElement('li');
+			li.innerHTML = key + " -> " + obj[key]; 
+			ul.appendChild(li);
+		  }
+	 }
+	 
+	  //document.body.appendChild(ul);
+	  document.getElementById("info").innerHTML = ul.innerHTML;
+	}
+
+  };
+  xhttp.open("GET", picUrl, true);
+  xhttp.send();
+}
+
+</script>
+</body>
+</html>

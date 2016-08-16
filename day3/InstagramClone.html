@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+img {
+    float: left;
+	height: 400px;
+	width: 400px;
+/*	border: 4px solid black;
+border-radius: 10px;*/
+margin-left: auto;
+	padding: 25px;
+}
+</style>
+</head>
+
+<body>
+
+<p id="demo">Instagram Clone</p>
+
+Please select a name: 
+ <select id ="name">
+<!--  <option value="">Please select</option>-->
+  <option value="Alice">Alice</option>
+  <option value="Bob">Bob</option>
+  <option value="Carol">Carol</option>
+  <option value="David">David</option>
+</select> 
+
+<button type="button" onclick="loadPic()">Get pictures</button>
+
+Filter by description: <input type="text" id="filter" onkeyup="filter()">
+<div id="info"></div>
+
+<script>
+function filter() {
+	console.log('call filter');
+	var filterText = document.getElementById("filter").value;
+	
+	
+}
+function loadPic() {
+  var xhttp = new XMLHttpRequest();
+   //alert(document.getElementById('name').value); 
+   var picUrl= 'http://localhost:8080/' + document.getElementById('name').value;
+  
+  console.log(picUrl);
+  
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState === 4 && xhttp.status === 200) {
+      //document.getElementById("demo").innerHTML = xhttp.responseText;
+	  
+	  var myImgs = document.getElementById("info");
+	  var last;
+	  while (last = myImgs.lastChild) {
+		myImgs.removeChild(last);
+	  }
+
+//	for (i = 0; i < myImgs.length; i++) {
+		
+	  //if (myLinkCollection[i]) {
+//		document.body.removeChild(myLinkCollection[i]);
+//		console.log('remove ' + i + "----" + myLinkCollection[i]);
+//		}
+//	}
+
+	  var obj = JSON.parse(xhttp.responseText);
+	 
+	  
+	  for (var i = 0; i < obj.length; i++) {
+	  
+	 
+		  
+			console.log(i + " -> " + obj[i]['url']);	
+
+			var img = document.createElement('img');
+			img.setAttribute("src", 'http://localhost:8080/images/' + obj[i]['url']);
+			img.setAttribute("title", obj[i]['description']);			
+			
+			document.getElementById("info").appendChild(img);
+	  }
+	 
+	}
+
+  };
+  xhttp.open("GET", picUrl, true);
+  xhttp.send();
+}
+
+</script>
+</body>
+</html>
